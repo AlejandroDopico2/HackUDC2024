@@ -1,35 +1,34 @@
-from datetime import date
-import math
-from pandas import read_csv
+import numpy as np
+import pandas as pd
 
 
 def process_csv(csv_path: str, out_path: str):
-    df = read_csv(csv_path, parse_dates=['datetime'])
+    df = pd.read_csv(csv_path, parse_dates=['Fecha'])
 
+    # Agrupar por 'Código universal de punto de suministro'
     grouped_df = df.groupby('Código universal de punto de suministro')
 
     for group_id, group_df in grouped_df:
-        df['Mes_cos'] = df['datetime'].dt.month.apply(math.cos)
-        df['Mes_sin'] = df['datetime'].dt.month.apply(math.sin)
-        df['Año'] = df['datetime'].dt.year
+        group_df['Mes_cos'] = np.cos(group_df['Fecha'].dt.month)
+        group_df['Mes_sin'] = np.sin(group_df['Fecha'].dt.month)
+        group_df['Año'] = group_df['Fecha'].dt.year
 
-        df['Dia_cos'] = df['datetime'].dt.day.apply(math.cos)
-        df['Dia_sin'] = df['datetime'].dt.day.apply(math.sin)
+        group_df['Dia_cos'] = np.cos(group_df['Fecha'].dt.day)
+        group_df['Dia_sin'] = np.sin(group_df['Fecha'].dt.day)
 
-        df['Dia_week'] = df['datetime'].dt.date.apply(date.weekday)
+        group_df['Dia_week'] = group_df['Fecha'].dt.dayofweek
 
-        df['finde'] = df['Dia_week'].apply(lambda x: 0 if x < 5 else 1)
+        group_df['finde'] = (group_df['Dia_week'] < 5).astype(int)
 
-        seasons = [1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 1]
+        seasons = [4,4,1,1,1,2,2,2,3,3,3,4]
         month_to_season = dict(zip(range(1, 13), seasons))
 
-        df['Estacion'] = df['datetime'].dt.month.apply(lambda x: month_to_season[x])
+        group_df['Estacion'] = group_df['Fecha'].dt.month.map(month_to_season)
 
-        out_file= f"{out_path}house_{group_id}.csv"
+        out_file = f"{out_path}house_{group_id}.csv"
+        group_df.to_csv(out_file, index=False)
 
-        df.to_csv(out_file, index=False)
-
-    return df
+    return grouped_df
 
 
 if __name__ == '__main__':
