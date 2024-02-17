@@ -1,44 +1,31 @@
 import pandas as pd
 from .ml_utils.data_utils import *
 
-def getPlotData(csvPath, option='month'):
+def getPlotData(csvPath, valor_filtro,option='month'):
     df = pd.read_csv(csvPath, parse_dates=["Fecha"], date_parser=lambda x: pd.to_datetime(x, format='%d-%m-%Y'))
     df = getPriceEveryday(df)
     df = splitDatetime(df)
     df = getYearlyFeatures(df)
 
-    for column_name in df.columns:
-        print(column_name)
-
-    # mes_consumo = df.groupby('Mes')['Consumo'].sum().reset_index()
     if option == 'month':
-        df['Fecha'] = pd.to_datetime(df['Mes'], format='%m').dt.strftime('%B')
+        df_ano = df[df['Ano'] == valor_filtro]
 
-        mes_consumo = df.groupby(['Mes', 'Fecha'])['Consumo'].sum().reset_index()
-
-        print(mes_consumo)
-
-        output = mes_consumo[['Fecha', 'Consumo']].values.tolist()
+        return list(df_ano.groupby('Mes')['Consumo'].apply(list).apply(sum))
 
     elif option == 'day_month':
-        day_month_consume = df.groupby('Dia')['Consumo'].sum().reset_index()
 
-        print(day_month_consume)
+        df_mes = df[df['Mes'] == valor_filtro]
 
-        output = day_month_consume[['Dia', 'Consumo']].values.tolist()
+        return list(df_mes.groupby('Dia')['Consumo'].apply(list).apply(sum))
 
     elif option == 'day_week':
-        df['Nombre_Dia_Semana'] = df['Fecha'].dt.day_name()
+        df['Dia_week'] = df['Fecha'].dt.dayofweek
 
-        day_week_consume = df.groupby(['Nombre_Dia_Semana'])['Consumo'].sum().reset_index()
+        day_week_consume = df.groupby(['Dia_week'])['Consumo'].sum().tolist()
 
-        print(day_week_consume)
+        return day_week_consume
 
-        output = day_week_consume[['Nombre_Dia_Semana', 'Consumo']].values.tolist()
+def get_years(csvPath):
+    df = pd.read_csv(csvPath, parse_dates=["Fecha"])
 
-
-
-
-    # Display the list of lists
-    # print("List of Lists [Fecha, Consumo]:", fecha_consumo_lists)
-    return output
+    return df['Ano'].unique()
