@@ -1,64 +1,67 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import anychart from 'anychart';
 import 'anychart/dist/css/anychart-ui.min.css';
 import 'anychart/dist/fonts/css/anychart-font.min.css';
 
 function LineChart() {
-    
-    useEffect(() => {
-        anychart.onDocumentReady(function () {
-          // Tu código del segundo gráfico aquí
-          var dataSet = anychart.data.set(getData());
-    
-          var firstSeriesData = dataSet.mapAs({ x: 0, value: 1 });
-          var secondSeriesData = dataSet.mapAs({ x: 0, value: 2 });
-          var thirdSeriesData = dataSet.mapAs({ x: 0, value: 3 });
-    
-          var chart = anychart.line();
-          chart.animation(true);
-          chart.padding([10, 20, 5, 20]);
-          chart.crosshair().enabled(true).yLabel(false).yStroke(null);
-          chart.tooltip().positionMode('point');
-          chart.title('Trend of Sales of the Most Popular Products of ACME Corp.');
-          chart.yAxis().title('Number of Bottles Sold (thousands)');
-          chart.xAxis().labels().padding(5);
-    
-          var firstSeries = chart.line(firstSeriesData);
-          firstSeries.name('Brandy');
-          firstSeries.hovered().markers().enabled(true).type('circle').size(4);
-          firstSeries
-            .tooltip()
-            .position('right')
-            .anchor('left-center')
-            .offsetX(5)
-            .offsetY(5);
-    
-          var secondSeries = chart.line(secondSeriesData);
-          secondSeries.name('Whiskey');
-          secondSeries.hovered().markers().enabled(true).type('circle').size(4);
-          secondSeries
-            .tooltip()
-            .position('right')
-            .anchor('left-center')
-            .offsetX(5)
-            .offsetY(5);
-    
-          var thirdSeries = chart.line(thirdSeriesData);
-          thirdSeries.name('Tequila');
-          thirdSeries.hovered().markers().enabled(true).type('circle').size(4);
-          thirdSeries
-            .tooltip()
-            .position('right')
-            .anchor('left-center')
-            .offsetX(5)
-            .offsetY(5);
-    
-          chart.legend().enabled(true).fontSize(13).padding([0, 0, 10, 0]);
-    
-          chart.container('second-chart-container');
-          chart.draw();
-        });
-      }, []);
+  const [chart, setChart] = useState(null);
+
+  useEffect(() => {
+    anychart.onDocumentReady(function () {
+      // Solo crea el gráfico si aún no existe
+      if (!chart) {
+        var dataSet = anychart.data.set(getData());
+
+        var firstSeriesData = dataSet.mapAs({ x: 0, value: 1 });
+        var secondSeriesData = dataSet.mapAs({ x: 0, value: 2 });
+        var thirdSeriesData = dataSet.mapAs({ x: 0, value: 3 });
+
+        var newChart = anychart.line();
+        newChart.animation(true);
+        newChart.padding([10, 20, 5, 20]);
+        newChart.crosshair().enabled(true).yLabel(false).yStroke(null);
+        newChart.tooltip().positionMode('point');
+        newChart.title('Trend of Sales of the Most Popular Products of ACME Corp.');
+        newChart.yAxis().title('Number of Bottles Sold (thousands)');
+        newChart.xAxis().labels().padding(5);
+
+        var firstSeries = newChart.line(firstSeriesData);
+        firstSeries.name('Brandy');
+        firstSeries.hovered().markers().enabled(true).type('circle').size(4);
+        firstSeries
+          .tooltip()
+          .position('right')
+          .anchor('left-center')
+          .offsetX(5)
+          .offsetY(5);
+
+        var secondSeries = newChart.line(secondSeriesData);
+        secondSeries.name('Whiskey');
+        secondSeries.hovered().markers().enabled(true).type('circle').size(4);
+        secondSeries
+          .tooltip()
+          .position('right')
+          .anchor('left-center')
+          .offsetX(5)
+          .offsetY(5);
+
+        var thirdSeries = newChart.line(thirdSeriesData);
+        thirdSeries.name('Tequila');
+        thirdSeries.hovered().markers().enabled(true).type('circle').size(4);
+        thirdSeries
+          .tooltip()
+          .position('right')
+          .anchor('left-center')
+          .offsetX(5)
+          .offsetY(5);
+
+        newChart.legend().enabled(true).fontSize(13).padding([0, 0, 10, 0]);
+
+        setChart(newChart);
+      }
+    });
+  }, [chart]); // Dependencia para evitar recrear el gráfico en cada renderizado
+
     
       function getData() {
         return [
