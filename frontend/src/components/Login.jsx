@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -8,9 +8,20 @@ function Login() {
   const [username, setUsername] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [goSuccess, setGoSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      // Verificar si el usuario está logueado al cargar el componente
+      const isLoggedIn = localStorage.getItem('username');
+
+      if (isLoggedIn) {
+        // Si no está logueado, redireccionar a la página de inicio de sesión
+        navigate('/home');
+      }
+    }, [navigate]);
     
 
-     // Estado para manejar los valores de los campos del formulario
+    // Estado para manejar los valores de los campos del formulario
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
@@ -57,7 +68,6 @@ function Login() {
   };
 
   if (loginSuccess) {
-    login(username)
     return <Navigate to="/home" />;
   }
 
