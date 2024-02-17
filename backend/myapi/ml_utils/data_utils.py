@@ -52,3 +52,7 @@ def getYearlyFeatures(df):
     df['Estacion'] = df['Mes'] % 12 // 3
 
     return df
+
+# def build_data(day):
+
+    

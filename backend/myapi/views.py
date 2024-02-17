@@ -10,7 +10,8 @@ import os
 import pandas as pd
 import traceback
 from .data_utils import getPlotData
-from .predict_model import fit_model
+from .predict_model import fit_model, predict
+import threading
 
 @api_view(['POST'])
 def register_user(request):
@@ -51,14 +52,6 @@ def upload_csv(request, username):
         user = User.objects.get(username=username)  # Obtén al usuario actual desde la solicitud
         print(user)
 
-        # Verifica si el usuario tiene una carpeta de carga especificada
-        # if not user.upload_folder:
-        #     print("no existia la carpeta")
-        #     # Si no tiene una carpeta de carga, crea una basada en su nombre de usuario
-        #     user.upload_folder = user.upload_folder
-        #     user.save()
-
-        # Directorio de carga completo
         upload_directory = os.path.join('../users/', user.username)
         print(upload_directory)
         
@@ -93,3 +86,15 @@ def upload_csv(request, username):
 @api_view(['GET'])
 def column_chart(request):
     return Response(getPlotData("../data/user_abel/data_house_0.csv"))
+
+@api_view(['POST'])
+def predict_month(request, username):
+    try:
+        user = User.objects.get(username=username)  # Obtén al usuario actual desde la solicitud
+        print(user)
+        predict(username)
+    except User.DoesNotExist:
+        return Response({'error': 'Usuario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        traceback.print_exc()
+        return Response({'error': f'Error al procesar el archivo CSV: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
