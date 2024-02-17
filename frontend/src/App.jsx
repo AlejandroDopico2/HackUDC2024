@@ -7,27 +7,20 @@ import './components/Header'
 import Register from './components/Register'
 import Login from './components/Login';
 import Home from './components/Home';
+import Default from './components/Default';
 
 function App() {
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    axios.get('http://localhost:8000/hello-world/')
-      .then(response => {
-        setMessage(response.data.message);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <div>
       {/* <Navigation /> */}
       <Routes>
-        <Route path="/" element={<Register />} />
+        <Route path="/" element={<Default />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
 
       </Routes>
