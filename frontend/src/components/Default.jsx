@@ -31,16 +31,20 @@ function Default() {
           <p>Un proyecto creado en una hackathon por</p>
           <ul className="list-none p-0">
             <li className="mb-4">
-              <span className="font-bold">Antón Canzobre</span>
+              <span className="font-bold">Antón Canzobre:</span> 
+              <a href="https://www.linkedin.com/in/anton-canzobre-mart%C3%ADnez-ba549a267/" target="_blank" rel="noopener noreferrer" className="text-blue-500 ml-2 underline hover:text-blue-700">LinkedIn</a>
             </li>
             <li className="mb-4">
-              <span className="font-bold">Alejandro Dopico</span>
+              <span className="font-bold">Alejandro Dopico:</span>
+              <a href="https://www.linkedin.com/in/alejandrodopicocastro/" target="_blank" rel="noopener noreferrer" className="text-blue-500 ml-2 underline hover:text-blue-700">LinkedIn</a>
             </li>
             <li className="mb-4">
-              <span className="font-bold">Abel Juncal</span>
+              <span className="font-bold">Abel Juncal:</span>
+              <a href="https://www.linkedin.com/in/abel-juncal-su%C3%A1rez-52b86a240/" target="_blank" rel="noopener noreferrer" className="text-blue-500 ml-2 underline hover:text-blue-700">LinkedIn</a>
             </li>
             <li>
-              <span className="font-bold">Alejandro Garcia</span>
+              <span className="font-bold">Alejandro Garcia:</span>
+              <a href="https://www.linkedin.com/in/alejandrogarciagarcia1/" target="_blank" rel="noopener noreferrer" className="text-blue-500 ml-2 underline hover:text-blue-700">LinkedIn</a>
             </li>
           </ul>
         </div>
