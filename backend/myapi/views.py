@@ -73,7 +73,7 @@ def upload_csv(request, username):
                 for chunk in csv_file.chunks():
                     destination.write(chunk)
 
-            if file_path
+            if file_path:
                 if is_duplicate(file_path, temporal_file_path):
                     os.remove(temporal_file_path)
                     return Response({'error': 'Este CSV está repetido'}, status=status.HTTP_400_BAD_REQUEST)
