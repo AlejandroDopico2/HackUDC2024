@@ -22,6 +22,16 @@ function Gastos() {
     const handleVolverClick = () => {
         setGoSuccess(true);
     };
+    const handleLlamadaClick = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/predict/');
+  
+        console.log(response.data);
+  
+      } catch (error) {
+        console.error('Error al enviar credenciales'+ error);
+      }
+    };
 
     if (goSuccess) {
         return <Navigate to="/home" />;
@@ -30,6 +40,11 @@ function Gastos() {
     <div className='p-5'>
         <button 
             onClick={handleVolverClick}
+            className='bg-red-500 text-white p-2 rounded-md hover:bg-red-600'>
+            Volver
+        </button>
+        <button 
+            onClick={handleLlamadaClick}
             className='bg-red-500 text-white p-2 rounded-md hover:bg-red-600'>
             Volver
         </button>

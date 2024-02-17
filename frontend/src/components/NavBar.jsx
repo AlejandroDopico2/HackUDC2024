@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import logo from '/public/logo-texto.png'
 
 const Navbar = () => {
   const storedUsername = localStorage.getItem('username');
@@ -19,8 +20,10 @@ const Navbar = () => {
   return (
     <header className="bg-green-500 text-white py-4">
       <div className="container mx-auto flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">WattVisor</h1>
-
+        <div className="flex items-center">
+            <img src={logo} alt="Logo de Gradiant" className='w-16 h-12 mr-2'/>
+            <h1 className="text-2xl font-semibold">WattVisor</h1>
+        </div>
         {storedUsername && (
           <div className="flex items-center">
             <p className="mr-4">Bienvenido, <span>{storedUsername}!</span></p>
