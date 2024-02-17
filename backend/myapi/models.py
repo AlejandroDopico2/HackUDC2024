@@ -7,7 +7,6 @@ class User(models.Model):
     username = models.CharField(max_length=20, blank=False, null=False)
     email = models.EmailField(max_length=50, blank=False, null=False)
     password = models.CharField(max_length=20, blank=False, null=False, default='')
-    upload_folder = models.CharField(max_length=255, blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)
 
@@ -15,4 +14,4 @@ class User(models.Model):
         verbose_name = 'user'
 
     def __str__(self) -> str:
-        return f"{self.first_name} {self.last_name} {self.upload_folder}"
+        return f"{self.first_name} {self.last_name}"

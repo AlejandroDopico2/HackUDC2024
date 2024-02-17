@@ -15,7 +15,6 @@ const Home = () => {
     };
     return (
       <>
-        <Navbar/>
         <div 
         className='m-5 p-5 flex border rounded-md'
         >

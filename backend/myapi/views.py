@@ -51,14 +51,14 @@ def upload_csv(request, username):
         print(user)
 
         # Verifica si el usuario tiene una carpeta de carga especificada
-        if not user.upload_folder:
-            print("no existia la carpeta")
-            # Si no tiene una carpeta de carga, crea una basada en su nombre de usuario
-            user.upload_folder = user.upload_folder
-            user.save()
+        # if not user.upload_folder:
+        #     print("no existia la carpeta")
+        #     # Si no tiene una carpeta de carga, crea una basada en su nombre de usuario
+        #     user.upload_folder = user.upload_folder
+        #     user.save()
 
         # Directorio de carga completo
-        upload_directory = os.path.join('../data', user.upload_folder)
+        upload_directory = os.path.join('../users', user.username, 'data')
         
 
         # Verifica si el directorio de carga existe, si no, créalo
