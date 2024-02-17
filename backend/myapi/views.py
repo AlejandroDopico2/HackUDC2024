@@ -9,11 +9,12 @@ from .serializers import UserSerializer
 import os
 import pandas as pd
 import traceback
-from .data_utils import getPlotData
+# from .data_utils import getPlotData
 from .predict_model import fit_model, predict
 import threading
 from .csv_utils import *
 from .pdf_utils import *
+from .plot_utils import *
 
 @api_view(['POST'])
 def register_user(request):
@@ -101,7 +102,15 @@ def upload_csv(request, username):
 
 @api_view(['GET'])
 def column_chart(request):
-    return Response(getPlotData("../users/"+request.username+"/data.csv"))
+    print(request)
+
+    username = request.GET.get('username', "uknowmn")
+    print(username)
+
+    path_file = f"../users/{str(username)}/data.csv"
+    data = getPlotData(path_file,2022,'month')
+
+    return Response(data, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def predict_month(request, username):

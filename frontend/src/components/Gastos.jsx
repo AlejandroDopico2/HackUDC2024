@@ -8,7 +8,7 @@ function Gastos() {
     const storedUsername = localStorage.getItem('username');
     const [goSuccess, setGoSuccess] = useState(false);
     const [tiempo, setTiempo] = useState('mes'); // Estado para guardar el valor seleccionado del primer select
-    const [fecha, setFecha] = useState('2023'); // Estado para guardar el valor seleccionado del primer select
+    const [anho, setAnho] = useState(2023); // Estado para guardar el valor seleccionado del primer select
 
     const navigate = useNavigate();
 
@@ -22,8 +22,26 @@ function Gastos() {
       }
     }, [navigate]);
 
-    useEffect(()=>{
+    useEffect( ()=>{
       console.log(tiempo)
+      const param = {
+        username : storedUsername,
+        time : tiempo,
+        year : anho,
+      };
+
+      if("mes" === tiempo){
+        
+      }
+
+      // try {
+        
+      //   const response = await axios.get('http://localhost:8000/api/columnChart/', { param });
+      //   return response.data;
+      // } catch (error) {
+      //   console.error("Error al realizar la petición GET de las gráficas: " + error);
+      //   return [];
+      // }
 
       //peticion de los años/meses/dias
     },[tiempo])
@@ -37,10 +55,10 @@ function Gastos() {
         
     };
 
-    const handleFechaChange = (event) => {
-      setFecha(event.target.value); // Actualizar el estado 'tiempo' con el valor seleccionado del primer select
+    const handleAnhoChange = (event) => {
+      setAnho(event.target.value); // Actualizar el estado 'tiempo' con el valor seleccionado del primer select
       
-  };
+    };
 
     const handleLlamadaClick = async () => {
       try {
@@ -59,21 +77,7 @@ function Gastos() {
     if (goSuccess) {
         return <Navigate to="/home" />;
     }
-  return (
-    <div className='p-5'>
-        <button 
-            onClick={handleVolverClick}
-            className='bg-red-500 text-white p-2 rounded-md hover:bg-red-600'>
-            Volver
-        </button>
-        <button 
-            onClick={handleLlamadaClick}
-            className='bg-red-500 text-white p-2 rounded-md hover:bg-blue-600'>
-            Predict
-        </button>
-      <div className='text-center mb-5'>
-        <h1 className='text-3xl text-green-500'>Gastos</h1>
-      </div>
+
 
     return (
         <div className='p-5'>
@@ -85,7 +89,7 @@ function Gastos() {
             <button 
                 onClick={handleLlamadaClick}
                 className='bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600'>
-                predecir
+                Predict
             </button>
             <div className='text-center mb-5'>
                 <h1 className='text-3xl text-green-500'>Gastos</h1>
@@ -110,13 +114,10 @@ function Gastos() {
 
                 {/* Segundo select */}
                   <select
-                    value={fecha}
-                    onChange={handleFechaChange}
+                    value={anho}
+                    onChange={handleAnhoChange}
                     className='w-30 p-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:border-blue-500'
                   >
-                    <option value='opcion1'>Opción 1</option>
-                    <option value='opcion2'>Opción 2</option>
-                    <option value='opcion3'>Opción 3</option>
                   </select>
               </div>
             </div>

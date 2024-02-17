@@ -47,9 +47,9 @@ const ColumnChart = ({tiempo, fecha}) =>{
     try {
       const param = {
         username : storedUsername,
-        time : tiempo,
+        // time : tiempo,
       };
-      const response = await axios.get('http://localhost:8000/api/columnChart/', { param });
+      const response = await axios.get('http://localhost:8000/api/columnChart/', { params:param });
       return response.data;
     } catch (error) {
       console.error("Error al realizar la petición GET de las gráficas: " + error);
