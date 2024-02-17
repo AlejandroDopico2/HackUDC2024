@@ -89,6 +89,7 @@ def column_chart(request):
 
 @api_view(['POST'])
 def predict_month(request, username):
+    print("hola")
     try:
         user = User.objects.get(username=username)  # Obtén al usuario actual desde la solicitud
         print(user)
