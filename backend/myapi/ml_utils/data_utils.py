@@ -70,6 +70,6 @@ def getYearlyFeatures(df):
 
     return df
 
-# def build_data(day):
-
+def build_data(day):
+    pass
     
