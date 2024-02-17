@@ -3,36 +3,35 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const UploadModalPdf = ({ closeModalPdf }) => {
-const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null);
   const storedUsername = localStorage.getItem('username');
-  
+
   const handleFileUpload = async (e) => {
     const selectedFile = e.target.files[0];
-    if(selectedFile) {
+    if (selectedFile) {
       try {
         const formData = new FormData();
         formData.append('pdf_file', selectedFile);
-  
-        
-   
-        await axios.post(`http://localhost:8000/api/uploadPdf/${storedUsername}/`, formData, {
+
+        const response = await axios.post(`http://localhost:8000/api/uploadPdf/${storedUsername}/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-  
+
+        // Llama a la función printPdf con el resultado de la petición
+        printPdf(response.data);
+
         console.log('Archivo PDF subido exitosamente');
       } catch (error) {
         console.error('Error al subir el archivo PDF:', error);
       }
-    }else{
+    } else {
       console.error('No se seleccionó un archivo PDF');
     }
-    
-    
+
     closeModalPdf();
   };
-  
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto flex items-center justify-center bg-black bg-opacity-50">

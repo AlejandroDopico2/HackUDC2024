@@ -101,7 +101,7 @@ def upload_csv(request, username):
 
 @api_view(['GET'])
 def column_chart(request):
-    return Response(getPlotData("../data/user_abel/data_house_0.csv"))
+    return Response(getPlotData("../users/"+request.username+"/data.csv"))
 
 @api_view(['POST'])
 def predict_month(request, username):
@@ -146,7 +146,7 @@ def upload_pdf(request, username):
 
             res = read_pdf(file_path)
             print(res)
-            return Response({'message': 'Archivo PDF procesado exitosamente'}, status=status.HTTP_200_OK)
+            return Response(res, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'No se proporcionó un archivo PDF'}, status=status.HTTP_400_BAD_REQUEST)
 

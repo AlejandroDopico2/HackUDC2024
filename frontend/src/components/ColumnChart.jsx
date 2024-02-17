@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom'
 import anychart from 'anychart';
 import axios from 'axios';
 
-function ColumnChart() {
+const ColumnChart = ({tiempo, fecha}) =>{
+  const storedUsername = localStorage.getItem('username');
   const [chart, setChart] = useState(null);
 
   useEffect(() => {
+    console.log("Hola")
     const fetchData = async () => {
       try {
         const seriesData = await getData();
@@ -42,7 +45,11 @@ function ColumnChart() {
 
   async function getData() {
     try {
-      const response = await axios.get('http://localhost:8000/api/columnChart/');
+      const param = {
+        username : storedUsername,
+        time : tiempo,
+      };
+      const response = await axios.get('http://localhost:8000/api/columnChart/', { param });
       return response.data;
     } catch (error) {
       console.error("Error al realizar la petición GET de las gráficas: " + error);
