@@ -10,6 +10,7 @@ import os
 import pandas as pd
 import traceback
 from .data_utils import getPlotData
+from .predict_model import fit_model
 
 @api_view(['POST'])
 def register_user(request):
@@ -58,9 +59,9 @@ def upload_csv(request, username):
         #     user.save()
 
         # Directorio de carga completo
-        upload_directory = os.path.join('../users', user.username, 'data')
+        upload_directory = os.path.join('../users/', user.username)
+        print(upload_directory)
         
-
         # Verifica si el directorio de carga existe, si no, créalo
         if not os.path.exists(upload_directory):
             print('creamos el directorio')
@@ -70,18 +71,14 @@ def upload_csv(request, username):
         print(csv_file)
         if csv_file:
             # Ruta completa del archivo a guardar
-            file_path = os.path.join(upload_directory, csv_file.name)
+            file_path = os.path.join(upload_directory, 'data.csv')
 
             # Guarda el archivo en la carpeta específica para el usuario
             with open(file_path, 'wb') as destination:
                 for chunk in csv_file.chunks():
                     destination.write(chunk)
 
-            # Lee el archivo CSV con pandas
-            df = pd.read_csv(file_path)
-
-            # Realiza operaciones con el DataFrame (por ejemplo, guarda en la base de datos)
-            # ...
+            fit_model(user.username)
 
             return Response({'message': 'Archivo CSV procesado exitosamente'}, status=status.HTTP_200_OK)
         else:
