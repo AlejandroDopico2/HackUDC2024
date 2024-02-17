@@ -1,6 +1,8 @@
 import pandas as pd
-from .ml_utils.data_utils import getPriceEveryday, getYearlyFeatures, lagData, radianEngineeringData, splitDatetime, build_data
+from .ml_utils.data_utils import getPriceEveryday, getYearlyFeatures, lagData, radianEngineeringData, splitDatetime
 from .ml_utils.model import train_model, predict_model
+import requests
+
 
 def prepareDataToTrain(df):
     df = splitDatetime(df)
@@ -31,8 +33,6 @@ def predict(username):
     previous_index = max_date_index - 24 * 30
     previous_data = data.iloc[previous_index:]
 
-    # df = prepareDataToTrain(previous_data)
-    # targets = df['Consumo']
-    previous_data.drop(['Consumo'], axis=1, inplace=True)    
+    previous_data = previous_data.reset_index()
 
-    cost = predict_model(previous_data, first_day, username)
+    predict_model(previous_data, first_day['Fecha'], username)

@@ -1,9 +1,15 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
+import requests
+
+def req_price():
+    url = "https://api.preciodelaluz.org/v1/prices/avg?zone=PCB"
+    r = requests.get(url=url)
+    data = r.json()
+    
+    return data["price"]
 
 def radianEngineeringData(df):
-
     df['hora_sin'] = np.sin(2 * np.pi * df['Hora'] / 24)
     df['hora_cos'] = np.cos(2 * np.pi * df['Hora'] / 24)
 
@@ -44,6 +50,17 @@ def lagData(df):
 
     df[f'Consumo_lag_hora_anterior_{lag}'] = df['Consumo'].shift(1)
     df[f'Precio_lag_hora_anterior_{lag}'] = df['Precio'].shift(1)
+
+    return df.dropna()
+
+def lagDataDistributed(df):
+    lags = [(1, 1), (2, 7), (3, 30)]
+    for lag, days in lags:
+        df[f'Consumo_lag_hora_{days}'] = df['Consumo'].shift(lag)
+        df[f'Precio_lag_hora_{days}'] = df['Precio'].shift(lag)
+
+    df[f'Consumo_lag_hora_anterior_30'] = df['Consumo'].shift(1)
+    df[f'Precio_lag_hora_anterior_30'] = df['Precio'].shift(1)
 
     return df.dropna()
 
