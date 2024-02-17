@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom';
-import { useUser } from './UserContext';
 import axios from 'axios';
 
 
@@ -9,7 +8,6 @@ function Login() {
   const [username, setUsername] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [goSuccess, setGoSuccess] = useState(false);
-  const { login } = useUser();
     
 
      // Estado para manejar los valores de los campos del formulario
@@ -46,7 +44,7 @@ function Login() {
       console.log('Respuesta del servidor:', response.data);
 
       if (response.data.message === 'Inicio de sesión exitoso.') {
-        setUsername(credentials.username)
+        localStorage.setItem('username', credentials.username);
         setLoginSuccess(true);
       } else {
         // Si hay un mensaje de error, puedes manejarlo aquí
