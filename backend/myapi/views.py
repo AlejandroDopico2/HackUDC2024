@@ -12,6 +12,7 @@ import traceback
 from .data_utils import getPlotData
 from .predict_model import fit_model, predict
 import threading
+from csv_utils import *
 
 @api_view(['POST'])
 def register_user(request):
@@ -65,11 +66,21 @@ def upload_csv(request, username):
         if csv_file:
             # Ruta completa del archivo a guardar
             file_path = os.path.join(upload_directory, 'data.csv')
+            temporal_file_path = os.path.join(upload_directory, 'temporal_data.csv') 
 
             # Guarda el archivo en la carpeta específica para el usuario
-            with open(file_path, 'wb') as destination:
+            with open(temporal_file_path, 'wb') as destination:
                 for chunk in csv_file.chunks():
                     destination.write(chunk)
+
+            if file_path
+                if is_duplicate(file_path, temporal_file_path):
+                    os.remove(temporal_file_path)
+                    return Response({'error': 'Este CSV está repetido'}, status=status.HTTP_400_BAD_REQUEST)
+                
+                concatenate_csv(file_path, temporal_file_path)
+            else:
+                os.rename(temporal_file_path, file_path)
 
             fit_model(user.username)
 
