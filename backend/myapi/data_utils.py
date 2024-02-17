@@ -14,9 +14,10 @@ def getPlotData(csvPath):
     fecha_consumo_lists = mes_consumo[['Fecha', 'Consumo']].values.tolist()
 
     # Display the list of lists
-    print("List of Lists [Fecha, Consumo]:", fecha_consumo_lists)
+    # print("List of Lists [Fecha, Consumo]:", fecha_consumo_lists)
+    return fecha_consumo_lists
 
-if __name__ == '__main__':
-    inputFile = '../../data/user_abel/data_house_0.csv'
+# if __name__ == '__main__':
+#     inputFile = '../../data/user_abel/data_house_0.csv'
 
-    getPlotData(inputFile)
+#     getPlotData(inputFile)

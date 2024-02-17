@@ -5,11 +5,10 @@ import Navbar from './NavBar'
 function Default() {
   return (
     <>
-    <Navbar />
     <div className='flex items-center justify-center h-screen'>
       <div className='container bg-white p-8 rounded shadow-md flex'>
         <div className='flex-1'>
-          <h1 className='text-green-500'>Os presentamos WattVisor</h1>
+          <h1 className='text-green-500 text-3xl'>Os presentamos WattVisor</h1>
           <p>Un proyecto creado en una hackathon por</p>
           <ul className="list-none p-0">
             <li className="mb-4">

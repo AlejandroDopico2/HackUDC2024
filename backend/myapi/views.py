@@ -9,6 +9,7 @@ from .serializers import UserSerializer
 import os
 import pandas as pd
 import traceback
+from .data_utils import getPlotData
 
 @api_view(['POST'])
 def register_user(request):
@@ -70,13 +71,11 @@ def upload_csv(request, username):
         if csv_file:
             # Ruta completa del archivo a guardar
             file_path = os.path.join(upload_directory, csv_file.name)
-            print("aquiiiiiiiiiii?")
 
             # Guarda el archivo en la carpeta específica para el usuario
             with open(file_path, 'wb') as destination:
                 for chunk in csv_file.chunks():
                     destination.write(chunk)
-            print("enma enma mariaa?")
 
             # Lee el archivo CSV con pandas
             df = pd.read_csv(file_path)
@@ -93,4 +92,7 @@ def upload_csv(request, username):
     except Exception as e:
         traceback.print_exc()
         return Response({'error': f'Error al procesar el archivo CSV: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+
+@api_view(['GET'])
+def column_chart(request):
+    return Response(getPlotData("../data/user_abel/data_house_0.csv"))
