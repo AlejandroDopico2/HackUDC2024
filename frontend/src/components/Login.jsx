@@ -19,14 +19,17 @@ function Login() {
   };
 
   // Función para manejar el envío del formulario
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Aquí puedes agregar lógica para enviar las credenciales al servidor
-    // por ejemplo, usando una solicitud HTTP con fetch o axios.
+    try {
+      const response = await axios.post('http://localhost:8000/api/login/', credentials);
 
-    // En este ejemplo, simplemente mostramos las credenciales en la consola.
-    console.log('Credenciales enviadas:', credentials);
+      // Manejar la respuesta del servidor (por ejemplo, mostrar un mensaje de éxito)
+      console.log('Respuesta del servidor:', response.data);
+    } catch (error) {
+      console.error('Error al enviar credenciales'+ error);
+    }
   };
 
   return (

@@ -7,8 +7,8 @@ function Register() {
   const [credentials, setCredentials] = useState({
     username: '',
     email: '',
-    name: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     password: '',
   });
 
@@ -27,7 +27,7 @@ function Register() {
 
     try {
       // Enviar los datos al servidor Django
-      const response = await axios.post('http://tu-servidor-django/api/registro/', credentials);
+      const response = await axios.post('http://localhost:8000/api/register/', credentials);
 
       // Manejar la respuesta del servidor (por ejemplo, mostrar un mensaje de éxito)
       console.log('Respuesta del servidor:', response.data);
@@ -63,33 +63,33 @@ function Register() {
             <input type='email' 
                 id='email' 
                 name='email' 
-                value={credentials.username}
+                value={credentials.email}
                 onChange={handleInputChange}
                 className='mt-1 p-2 w-full border rounded-md' 
                 />
           </div>
 
           <div className='mb-4'>
-            <label htmlFor='name' className='block text-sm font-medium text-gray-600'>
+            <label htmlFor='first_name' className='block text-sm font-medium text-gray-600'>
               Name:
             </label>
             <input type='text' 
-                id='name' 
-                name='name' 
-                value={credentials.name}
+                id='first_name' 
+                name='first_name' 
+                value={credentials.first_name}
                 onChange={handleInputChange}
                 className='mt-1 p-2 w-full border rounded-md' 
                 />
           </div>
 
           <div className='mb-4'>
-            <label htmlFor='lastName' className='block text-sm font-medium text-gray-600'>
+            <label htmlFor='last_name' className='block text-sm font-medium text-gray-600'>
               Last Name:
             </label>
             <input type='text' 
-                id='lastName' 
-                name='lastName' 
-                value={credentials.lastName}
+                id='last_name' 
+                name='last_name' 
+                value={credentials.last_name}
                 onChange={handleInputChange}
                 className='mt-1 p-2 w-full border rounded-md' 
                 />
