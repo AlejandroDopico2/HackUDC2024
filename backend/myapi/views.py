@@ -14,7 +14,7 @@ def register_user(request):
         with transaction.atomic():
             serializer.save()
         return Response(serializer.data, status=201)
-    return Response(serializer.errors, status=400)
+    return Response(serializer.errors, status=400)    
 
 @api_view(['POST'])
 def login_user(request):
