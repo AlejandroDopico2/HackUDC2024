@@ -11,6 +11,7 @@ import pandas as pd
 import traceback
 from .data_utils import getPlotData
 from .predict_model import fit_model
+import threading
 
 @api_view(['POST'])
 def register_user(request):
@@ -47,6 +48,7 @@ def login_user(request):
 
 @api_view(['POST'])
 def upload_csv(request, username):
+
     try:
         user = User.objects.get(username=username)  # Obtén al usuario actual desde la solicitud
         print(user)
@@ -78,7 +80,11 @@ def upload_csv(request, username):
                 for chunk in csv_file.chunks():
                     destination.write(chunk)
 
-            fit_model(user.username)
+            thread_one = threading.Thread(target=fit_model,args=(user.username,))
+            thread_one.start()
+
+            # fit_model(user.username)
+
 
             return Response({'message': 'Archivo CSV procesado exitosamente'}, status=status.HTTP_200_OK)
         else:
