@@ -1,7 +1,9 @@
 # En views.py
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.contrib.auth.models import User
+from myapi.models import User
+from rest_framework import status
+from django.contrib.auth import authenticate
 from django.db import transaction
 from .serializers import UserSerializer
 
@@ -22,12 +24,17 @@ def login_user(request):
     username = request.data.get('username', '')
     password = request.data.get('password', '')
 
-    # Autenticar al usuario
-    user = authenticate(username=username, password=password)
-
-    if user is not None:
+    try:
+        user = User.objects.get(username=username)
+        print(f'El usuario con el nombre de usuario {username} existe.')
+        print(user)
+    except User.DoesNotExist:
+        # El usuario no existemodels
+        print(f'El usuario con el nombre de usuario {username} no existe.')
+        
+    if user.password == password:
         # Iniciar sesión para el usuario autenticado
-        login(request, user)
+        # login(request, user)
         return Response({'message': 'Inicio de sesión exitoso.'}, status=status.HTTP_200_OK)
     else:
         # Credenciales inválidas

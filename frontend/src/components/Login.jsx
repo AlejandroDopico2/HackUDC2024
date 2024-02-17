@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
+import { Navigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 
 function Login() {
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
      // Estado para manejar los valores de los campos del formulario
   const [credentials, setCredentials] = useState({
@@ -27,10 +31,24 @@ function Login() {
 
       // Manejar la respuesta del servidor (por ejemplo, mostrar un mensaje de éxito)
       console.log('Respuesta del servidor:', response.data);
+
+      if (response.data.message === 'Inicio de sesión exitoso.') {
+        setLoginSuccess(true);
+      } else {
+        // Si hay un mensaje de error, puedes manejarlo aquí
+        console.error('Error en el inicio de sesión:', response.data.error);
+      }
     } catch (error) {
       console.error('Error al enviar credenciales'+ error);
     }
+
   };
+
+  if (loginSuccess) {
+    return <Navigate to="/home" />;
+  }
+
+
 
   return (
     <>

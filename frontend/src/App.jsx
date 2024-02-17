@@ -6,7 +6,7 @@ import axios from 'axios';
 import './components/Header'
 import Register from './components/Register'
 import Login from './components/Login';
-import Navigation from './Navigation';
+import Home from './components/Home';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -28,6 +28,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+
       </Routes>
       
     </div>
