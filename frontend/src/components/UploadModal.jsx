@@ -13,8 +13,6 @@ const UploadModal = ({ closeModal }) => {
         const formData = new FormData();
         formData.append('csv_file', selectedFile);
   
-        
-   
         await axios.post(`http://localhost:8000/api/upload/${storedUsername}/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',

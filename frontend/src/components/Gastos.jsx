@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ColumnChart from './ColumnChart';
 import { Navigate, useNavigate } from 'react-router-dom';
+import Home from './Home';
 import axios from 'axios';
 
 function Gastos() {
+    const storedUsername = localStorage.getItem('username');
     const [goSuccess, setGoSuccess] = useState(false);
     const [tiempo, setTiempo] = useState('mes'); // Estado para guardar el valor seleccionado del primer select
     const [fecha, setFecha] = useState('2023'); // Estado para guardar el valor seleccionado del primer select
@@ -42,9 +44,12 @@ function Gastos() {
 
     const handleLlamadaClick = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/predict/');
+         await axios.post(`http://localhost:8000/api/predict/${storedUsername}/`, storedUsername, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
   
-        console.log(response.data);
   
       } catch (error) {
         console.error('Error al enviar credenciales' + error);
@@ -54,6 +59,21 @@ function Gastos() {
     if (goSuccess) {
         return <Navigate to="/home" />;
     }
+  return (
+    <div className='p-5'>
+        <button 
+            onClick={handleVolverClick}
+            className='bg-red-500 text-white p-2 rounded-md hover:bg-red-600'>
+            Volver
+        </button>
+        <button 
+            onClick={handleLlamadaClick}
+            className='bg-red-500 text-white p-2 rounded-md hover:bg-blue-600'>
+            Predict
+        </button>
+      <div className='text-center mb-5'>
+        <h1 className='text-3xl text-green-500'>Gastos</h1>
+      </div>
 
     return (
         <div className='p-5'>

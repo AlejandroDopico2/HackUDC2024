@@ -105,11 +105,10 @@ def column_chart(request):
 
 @api_view(['POST'])
 def predict_month(request, username):
-    print("hola")
     try:
         user = User.objects.get(username=username)  # Obtén al usuario actual desde la solicitud
-        print(user)
-        # predict(username)
+        predict(username)
+        return Response({'message': 'Archivo CSV predicho exitosamente'}, status=status.HTTP_200_OK)
     except User.DoesNotExist:
         return Response({'error': 'Usuario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
