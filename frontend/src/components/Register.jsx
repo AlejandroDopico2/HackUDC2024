@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { Navigate } from 'react-router-dom';
+
 import axios from 'axios';
 
 function Register() {
@@ -11,6 +13,8 @@ function Register() {
     last_name: '',
     password: '',
   });
+  const [goSuccess, setGoSuccess] = useState(false);
+
 
   // Función para manejar cambios en los campos de entrada
   const handleInputChange = (e) => {
@@ -38,8 +42,17 @@ function Register() {
     }
   };
 
+  const handleVolverClick = () => {
+    setGoSuccess(true);
+  };
+
+  if (goSuccess) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <>
+    <div className='flex items-center justify-center h-screen'>
     <div className='bg-white p-8 rounded shadow-md w-96'>
         <h1 className='text-2xl font-semibold mb-6'>Register</h1>
         <form onSubmit={handleSubmit}>
@@ -107,13 +120,21 @@ function Register() {
                 className='mt-1 p-2 w-full border rounded-md'/>
           </div>
 
-          {/* Botón de enviar */}
-          <button 
-            type='submit'
-            className='bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600'>
-            Iniciar Sesión
-          </button>
+          <div className='flex space-x-44'>
+            <button 
+                  onClick={handleVolverClick}
+                  className='bg-red-500 text-white p-2 rounded-md hover:bg-red-600'>
+                  volver
+            </button>
+            <button 
+              type='submit'
+              className='bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600'>
+              Register
+            </button>
+            </div>
+          
         </form>
+      </div>
       </div>
     </>
   )

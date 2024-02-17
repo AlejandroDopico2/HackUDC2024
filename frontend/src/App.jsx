@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import axios from 'axios';
 
+import { UserProvider } from './components/UserContext';
 import './components/Header'
 import Register from './components/Register'
 import Login from './components/Login';
@@ -17,9 +18,8 @@ function App() {
 
 
   return (
-    <div>
+    <UserProvider>
       <Navbar/>
-      {/* <Navigation /> */}
       <Routes>
         <Route path="/" element={<Default />} />
         <Route path="/login" element={<Login />} />
@@ -30,7 +30,7 @@ function App() {
 
       </Routes>
       
-    </div>
+    </UserProvider>
   );
 }
 

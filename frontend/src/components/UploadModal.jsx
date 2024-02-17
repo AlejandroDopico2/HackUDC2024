@@ -1,9 +1,11 @@
 // En tu componente que contiene el modal (por ejemplo, UploadModal.js)
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useUser } from './UserContext';
 
 const UploadModal = ({ closeModal }) => {
   const [file, setFile] = useState(null);
+  const { username } = useUser();
   
   const handleFileUpload = async (e) => {
     const selectedFile = e.target.files[0];
@@ -12,7 +14,7 @@ const UploadModal = ({ closeModal }) => {
         const formData = new FormData();
         formData.append('csv_file', selectedFile);
   
-        const username = 'abel';
+        
    
         await axios.post(`http://localhost:8000/api/upload/${username}/`, formData, {
           headers: {
