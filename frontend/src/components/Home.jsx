@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
-import Navbar from './NavBar'
 import UploadModal from './UploadModal';
-import { useUser } from './UserContext';
 
 const Home = () => {
-    const { username } = useUser();
     const [modalOpen, setModalOpen] = useState(false);
 
     const openModal = () => {

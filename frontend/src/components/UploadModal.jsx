@@ -1,11 +1,10 @@
 // En tu componente que contiene el modal (por ejemplo, UploadModal.js)
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useUser } from './UserContext';
 
 const UploadModal = ({ closeModal }) => {
   const [file, setFile] = useState(null);
-  const { username } = useUser();
+  const storedUsername = localStorage.getItem('username');
   
   const handleFileUpload = async (e) => {
     const selectedFile = e.target.files[0];
@@ -16,7 +15,7 @@ const UploadModal = ({ closeModal }) => {
   
         
    
-        await axios.post(`http://localhost:8000/api/upload/${username}/`, formData, {
+        await axios.post(`http://localhost:8000/api/upload/${storedUsername}/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

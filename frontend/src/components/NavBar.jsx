@@ -1,17 +1,15 @@
 // En Navbar.js
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useUser } from './UserContext';
 
 const Navbar = () => {
-    const { username } = useUser();
+  const storedUsername = localStorage.getItem('username');
   return (
     <header className="bg-green-500 text-white py-4">
       <div className="container mx-auto ">
         
         <h1 className="text-2xl font-semibold">WattVisor</h1>
-        {username && (
-          <p>Bienvenido, <span>{username}!</span></p>
+        {storedUsername && (
+          <p>Bienvenido, <span>{storedUsername}!</span></p>
         )}
         
       </div>
