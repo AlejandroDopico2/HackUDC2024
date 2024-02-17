@@ -82,15 +82,16 @@ function Gastos() {
     return (
         <div className='p-5'>
             <button 
-                onClick={handleVolverClick}
-                className='bg-red-500 text-white p-2 rounded-md hover:bg-red-600'>
-                Volver
+              onClick={handleVolverClick}
+              className='m-10 bg-red-500 text-white p-3 rounded-lg hover:bg-red-600'>
+              Volver
             </button>
             <button 
-                onClick={handleLlamadaClick}
-                className='bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600'>
-                Predict
+              onClick={handleLlamadaClick}
+              className='bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600'>
+              Predict
             </button>
+
             <div className='text-center mb-5'>
                 <h1 className='text-3xl text-green-500'>Gastos</h1>
             </div>

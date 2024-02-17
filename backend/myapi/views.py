@@ -105,10 +105,12 @@ def column_chart(request):
     print(request)
 
     username = request.GET.get('username', "uknowmn")
+    year = int(request.GET.get('year', '2023'))
     print(username)
+    print(year)
 
     path_file = f"../users/{str(username)}/data.csv"
-    data = getPlotData(path_file,2022,'month')
+    data = getPlotData(path_file,year,'month')
 
     return Response(data, status=status.HTTP_200_OK)
 
